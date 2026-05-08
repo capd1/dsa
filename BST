@@ -1,4 +1,5 @@
 class Node:
+
     def __init__(self, key):
         self.key = key
         self.left = None
@@ -6,68 +7,75 @@ class Node:
 
 
 class ABC:
+
     def __init__(self):
         self.root = None
 
-    # insert
+    
     def insert(self, root, key):
+
         if root is None:
             return Node(key)
-        elif key > root.key:
+
+        elif key < root.key:
             root.left = self.insert(root.left, key)
+
         elif key > root.key:
             root.right = self.insert(root.right, key)
+
         return root
 
     def insertNode(self, key):
         self.root = self.insert(self.root, key)
-        print(f"{key} inserted succesfully")
+        print(f"{key} inserted successfully")
 
-    # search
+   
     def search(self, root, key):
+
         if root is None:
             return None
+
         if root.key == key:
             return root
+
         elif key < root.key:
             return self.search(root.left, key)
+
         elif key > root.key:
             return self.search(root.right, key)
 
     def searchKey(self, key):
+
         result = self.search(self.root, key)
+
         if result:
             print(f"{key} found")
+
         else:
-            print(f"{key} not Found")
+            print(f"{key} not found")
 
 
 if __name__ == "__main__":
+
     abc = ABC()
+
     while True:
-        print("BST ALGO")
-        print("1.insert a number: ")
-        print("2.search a number: ")
-        choice = int(input("enter a number "))
+
+        print("\nBST ALGORITHM")
+        print("1. Insert a number")
+        print("2. Search a number")
+        print("3. Exit")
+
+        choice = int(input("Enter choice: "))
+
         if choice == 1:
-            key = int(input("enter a number "))
+            key = int(input("Enter number: "))
             abc.insertNode(key)
-        if choice == 2:
-            key = int(input("enter a value "))
+
+        elif choice == 2:
+            key = int(input("Enter value to search: "))
             abc.searchKey(key)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        elif choice == 3:
+            print("Program Ended")
+            break
