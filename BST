@@ -1,81 +1,90 @@
-class Node:
+# Binary Search Tree Implementation in Python
 
-    def __init__(self, key):
-        self.key = key
+class Node:
+    def __init__(self, data):
+        self.data = data
         self.left = None
         self.right = None
 
 
-class ABC:
-
+class BST:
     def __init__(self):
         self.root = None
 
-    
-    def insert(self, root, key):
-
+    # a) Insert
+    def insert(self, root, data):
         if root is None:
-            return Node(key)
+            return Node(data)
 
-        elif key < root.key:
-            root.left = self.insert(root.left, key)
-
-        elif key > root.key:
-            root.right = self.insert(root.right, key)
+        if data < root.data:
+            root.left = self.insert(root.left, data)
+        else:
+            root.right = self.insert(root.right, data)
 
         return root
 
-    def insertNode(self, key):
-        self.root = self.insert(self.root, key)
-        print(f"{key} inserted successfully")
-
-   
+    # b) Search
     def search(self, root, key):
-
         if root is None:
-            return None
+            return False
 
-        if root.key == key:
-            return root
+        if root.data == key:
+            return True
 
-        elif key < root.key:
+        if key < root.data:
             return self.search(root.left, key)
-
-        elif key > root.key:
+        else:
             return self.search(root.right, key)
 
-    def searchKey(self, key):
+    # c) Display Leaf Nodes
+    def display_leaf_nodes(self, root):
+        if root is not None:
+            if root.left is None and root.right is None:
+                print(root.data, end=" ")
 
-        result = self.search(self.root, key)
+            self.display_leaf_nodes(root.left)
+            self.display_leaf_nodes(root.right)
 
-        if result:
-            print(f"{key} found")
+    # d) Level Wise Traversal
+    def level_order(self):
+        if self.root is None:
+            return
 
-        else:
-            print(f"{key} not found")
+        queue = []
+        queue.append(self.root)
+
+        while queue:
+            current = queue.pop(0)
+            print(current.data, end=" ")
+
+            if current.left:
+                queue.append(current.left)
+
+            if current.right:
+                queue.append(current.right)
 
 
-if __name__ == "__main__":
+# Driver Code
+bst = BST()
 
-    abc = ABC()
+n = int(input("Enter number of nodes: "))
 
-    while True:
+for i in range(n):
+    value = int(input("Enter value: "))
+    bst.root = bst.insert(bst.root, value)
 
-        print("\nBST ALGORITHM")
-        print("1. Insert a number")
-        print("2. Search a number")
-        print("3. Exit")
+# Search Operation
+key = int(input("Enter element to search: "))
 
-        choice = int(input("Enter choice: "))
+if bst.search(bst.root, key):
+    print("Element found")
+else:
+    print("Element not found")
 
-        if choice == 1:
-            key = int(input("Enter number: "))
-            abc.insertNode(key)
+# Display Leaf Nodes
+print("Leaf Nodes are:")
+bst.display_leaf_nodes(bst.root)
 
-        elif choice == 2:
-            key = int(input("Enter value to search: "))
-            abc.searchKey(key)
-
-        elif choice == 3:
-            print("Program Ended")
-            break
+# Level Wise Traversal
+print("\nLevel Order Traversal:")
+bst.level_order()
