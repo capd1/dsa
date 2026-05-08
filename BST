@@ -40,7 +40,6 @@ class ABC:
             print(f"{key} found")
         else:
             print(f"{key} not Found")
-    # main
 
 
 if __name__ == "__main__":
